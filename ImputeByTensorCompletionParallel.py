@@ -11,6 +11,8 @@ import torch
 #Load Set from a pickled file
 import pickle 
 
+torch.multiprocessing.set_sharing_strategy('file_system')
+
 cluster_seed = int(sys.argv[1])
 cluster_level = int(sys.argv[2])
 #validation = int(sys.argv[3])
@@ -453,7 +455,7 @@ print("CPU count: ", mp.cpu_count())
 
 pool= mp.Pool(4)
 
-pool.map(parallel_clusters,[(each_set, rank,alpha_, 0.0, 200, train_list, test_list) for each_set in SetList])
+pool.starmap(parallel_clusters,[(each_set, rank,alpha_, train_list, test_list) for each_set in SetList])
 
 pool.close()
 
