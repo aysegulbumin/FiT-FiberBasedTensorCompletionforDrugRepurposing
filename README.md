@@ -39,6 +39,8 @@ I will be keeping log of the set of experiments we have run for this project.
   - This plot would show that as we have more number of neighbors the error gets smaller hence the method is biased. 
 
 10. Mention about our hypothesis of if two genes are connected then we expect their transcription values to be correlated? or we expect their transcription values to be equal? IF BY ANY EXTERNAL RESOURCES (we selected this to be experimental evidence in order to have a strong evidence) two genes are known to be connected how would their transcription values would be correlated? Would they be equal ? Would they be correlated? Emphasize on the biological factors and find some supporting ideas and mention them in the paper. One classic way to add is via a regularization term. However the classical regularizers penalizes the inequality whereas we need the penalization of the discorrelation. 
+
+11. Further analysis on how did clustering two genes effected their prediction value analysis can be done.
   
 ** Data **
 - Important detail that I should discuss in the paper is the fact that test samples and training samples are pairs of cell line and drugs instead of i,j,k values all over the tensor. It is an important detail. This way it is possible to treat that for any selected test samples pair of cell line and drugs we make sure that there is no gene that share the same cell line and drug combination and that is in the training. So this is done to avoid cheating. We made sure of this.
