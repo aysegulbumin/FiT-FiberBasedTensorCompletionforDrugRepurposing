@@ -34,3 +34,5 @@ I will be keeping log of the set of experiments we have run for this project.
   - Which time should we report? Should we report the time that it takes to perform one update? Or should we report the time that it takes to perform 120 updates while calculating the test loss at every iteration? In that case it would not be a pure comparison of the fiber update. Hence I just decided to time the pure update with and without the fiber. 
   - The code for non-fiber update is not in the directory. (To be added)
   
+** Data **
+- Important detail that I should discuss in the paper is the fact that test samples and training samples are pairs of cell line and drugs instead of i,j,k values all over the tensor. It is an important detail. This way it is possible to treat that for any selected test samples pair of cell line and drugs we make sure that there is no gene that share the same cell line and drug combination and that is in the training. So this is done to avoid cheating. We made sure of this.
