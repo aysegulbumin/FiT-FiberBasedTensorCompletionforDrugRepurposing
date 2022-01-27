@@ -51,7 +51,8 @@ I will be keeping log of the set of experiments we have run for this project.
       - Check the genes in each cluster.
       - Maybe make sure that the genes that are connected are in the same cluster. 
       - Another option is to put all the  genes that are correlated in the same cluster and then add the external information. If there are 70 genes that are correlated and the 908 genes are yet to be clustered.
-       
+ 
+14. Do not forget to add the computational complexity analysis.
   
 ** Data **
 - Important detail that I should discuss in the paper is the fact that test samples and training samples are pairs of cell line and drugs instead of i,j,k values all over the tensor. It is an important detail. This way it is possible to treat that for any selected test samples pair of cell line and drugs we make sure that there is no gene that share the same cell line and drug combination and that is in the training. So this is done to avoid cheating. We made sure of this.
