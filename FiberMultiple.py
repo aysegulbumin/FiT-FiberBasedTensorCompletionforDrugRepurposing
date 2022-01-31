@@ -14,7 +14,7 @@ import pickle
 #validation = int(sys.argv[3])
 test_id = int(sys.argv[1])
 iterate = int(sys.argv[2])
-multi = int(sys.argv[3]) 
+multi = float(sys.argv[3]) 
 print("Loading Set from pickle file.")
 
 file_to_read = open("/blue/tkahveci/aysegul.bumin/Data/Set.pkl", "rb")
@@ -68,11 +68,24 @@ for key in Set.keys():
     multi_tensor = torch.FloatTensor(Set[key])
     one_tensor = torch.FloatTensor(Set[key])
 
-    #multi has to be >=1 
-    for i in range(multi-1):
-        multi_tensor =  combine_tensors(multi_tensor,one_tensor)
+    if multi == 0.5 :
+        multi_tensor = multi_tensor[:500]
+    elif multi == 0.4 :
+        multi_tensor = multi_tensor[:400]
+    elif multi == 0.3 :
+        multi_tensor = multi_tensor[:300]
+    elif multi == 0.2 :
+        multi_tensor = multi_tensor[:200]
+    elif multi == 0.1 :
+        multi_tensor = multi_tensor[:100]
+    elif multi == 0.6 :
+        multi_tensor = multi_tensor[:600]
+    #multi has to be >=1
+    elif multi >= 1 : 
+        for i in range(multi-1):
+            multi_tensor =  combine_tensors(multi_tensor,one_tensor)
 
-    Set[key]= multi_tensor
+    Set[key] = multi_tensor
 
 print("Multitensor shape:", multi_tensor.shape)
 
