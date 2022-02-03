@@ -113,21 +113,38 @@ rmse_list=[]
 GeneError = [0 for i in range(978)]
 summed_error = 0
 summed_norm = 0
+CellDictPredicted = {}
+CellDictActual = {}
 for i,j in test_list:
     for k in range(978):
       predicted = PredictwithMedian(i,j,k,Set)
       actual = Set[(i,j)][k]
-
+      
       summed_norm += (actual)**2
       error = (predicted-actual)**2
       summed_error += error
       GeneError[k] = np.sqrt((predicted-actual)**2)/np.sqrt((actual)**2)
-
+      if i not in list(CellDictPredicted.keys()):
+          CellDictPredicted[i] = []
+          CellDictActual[i] = []
+      else:
+          CellDictPredicted[i] = predicted
+          CellDictActual[i] = actual
+         
 rmse = np.sqrt(summed_error)/ np.sqrt(summed_norm)
 print("Per Gene Error in Two Way Algorithm")
 print(GeneError)
 print("Test error:", rmse)
 
+print("Predicted: ")
+for key, values in CellDictPredicted.items():
+    print(key)
+    print(values)
+
+print("Actual: ")
+for key, values in CellDictActual.items():
+    print(key)
+    print(values)
 
 
 print("Calculating the Test Error :")
@@ -138,6 +155,9 @@ error=0
 
 GeneError = [0 for i in range(978)]
 
+CellDictPredicted = {}
+CellDictActual = {}
+
 for key in test_list:
     for k in range(978):
         predicted = ImputedTensorCompletion[key][k]
@@ -145,9 +165,25 @@ for key in test_list:
         error += (predicted-actual)**2
         norm_square += (actual)**2
         GeneError[k] = np.sqrt((predicted-actual)**2)/np.sqrt((actual)**2)
+        if i not in list(CellDictPredicted.keys()):
+            CellDictPredicted[i] = []
+            CellDictActual[i] = []
+        else:
+            CellDictPredicted[i] = predicted
+            CellDictActual[i] = actual
+
 rmse = np.sqrt(error)/np.sqrt(norm_square)
 print("Per Gene Error in Tensor Completion with " + imputed_file)
 print(GeneError)
 print(rmse)
 
+print("Predicted: ")
+for key, values in CellDictPredicted.items():
+    print(key)
+    print(values)
+
+print("Actual: ")
+for key, values in CellDictActual.items():
+    print(key)
+    print(values)
 
