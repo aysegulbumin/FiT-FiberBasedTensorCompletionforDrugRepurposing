@@ -153,10 +153,10 @@ error=0
 GeneError = [0 for i in range(978)]
 CellDictPredicted = {}
 CellDictActual = {}
-for key in test_list:
+for i,j in test_list:
     for k in range(978):
-        predicted = ImputedTensorCompletion[key][k]
-        actual = Set[key][k]
+        predicted = ImputedTensorCompletion[(i,j)][k]
+        actual = Set[(i,j)][k]
         error += (predicted-actual)**2
         norm_square += (actual)**2
         GeneError[k] = np.sqrt((predicted-actual)**2)/np.sqrt((actual)**2)
