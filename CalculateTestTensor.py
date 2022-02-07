@@ -128,8 +128,8 @@ for i,j in test_list:
           CellDictPredicted[i] = []
           CellDictActual[i] = []
       else:
-          CellDictPredicted[i] = predicted
-          CellDictActual[i] = actual
+          CellDictPredicted[i].append(predicted)
+          CellDictActual[i].append(actual)
 
 rmse = np.sqrt(summed_error)/ np.sqrt(summed_norm)
 print("Per Gene Error in Two Way Algorithm")
@@ -164,8 +164,8 @@ for i,j in test_list:
             CellDictPredicted[i] = []
             CellDictActual[i] = []
         else:
-            CellDictPredicted[i] = predicted
-            CellDictActual[i] = actual
+            CellDictPredicted[i].append(predicted)
+            CellDictActual[i].append(actual)
 
 
 rmse = np.sqrt(error)/np.sqrt(norm_square)
