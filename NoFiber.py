@@ -13,7 +13,7 @@ import pickle
 
 #validation = int(sys.argv[3])
 test_id = int(sys.argv[1])
-
+iterate = int(sys.argv[2])
 print("Loading Set from pickle file.")
 
 file_to_read = open("/blue/tkahveci/aysegul.bumin/Data/Set.pkl", "rb")
@@ -246,8 +246,53 @@ class TF_SGD(): #stands for tensor factorization
                 self.A[i, :] -= self.alpha * Grad_A.numpy()
                 self.B[j, :] -= self.alpha * Grad_B.numpy()
                 self.C -= self.alpha * Grad_C.numpy()
-                
     def AdaGrad(self,iterations):
+        """
+        Perform stochastic gradient descent with AdaGrad update
+        """
+        print('Alpha:', self.alpha)
+        
+        gti_a=np.zeros(self.K)
+        gti_b=np.zeros(self.K)
+        gti_c=np.zeros(self.K)
+        
+        np.random.shuffle(self.training_samples)
+        mini_samples=self.training_samples
+        for i, j in mini_samples:
+            for k, r  in enumerate(self.Dict[(i,j)]):
+                # Create copy of row of P since we need to update it but use older values for update on Q
+                A_i = self.A[i, :][:]
+                B_j = self.B[j, :][:]
+                C_k = self.C[k, :][:]
+
+                ac=np.multiply(A_i,C_k)
+                bc=np.multiply(B_j,C_k)
+                ab=np.multiply(A_i,B_j)
+
+                innerproduct=np.matmul(np.multiply(self.A[i, :][:], self.B[j, :][:]), self.C[k,:][:])
+                n= innerproduct-r
+
+                fudge_factor=1e-6
+
+                grad_a=( bc*n.numpy())
+                gti_a+=grad_a**2
+                adjusted_grad_a = grad_a / np.sqrt(fudge_factor +(gti_a)) 
+
+                grad_b=(  ac*n.numpy())
+                gti_b+=grad_b**2
+                adjusted_grad_b = grad_b / np.sqrt(fudge_factor + (gti_b))
+
+                grad_c=(  ab*n.numpy())
+                gti_c+=grad_c**2
+                adjusted_grad_c = grad_c / np.sqrt(fudge_factor + (gti_c))
+
+
+                self.A[i, :] -= self.alpha * adjusted_grad_a
+                self.B[j, :] -= self.alpha * adjusted_grad_b
+                self.C[k, :] -= self.alpha * adjusted_grad_c
+
+               
+    def AdaGrad_fiber(self,iterations):
         """
         Perform stochastic gradient descent with AdaGrad update
         """
@@ -351,10 +396,11 @@ for each_set in SetList:
     alpha_= 0.01
     rank = 500
 
-    tf_sgd_constant = TF_SGD(each_set,rank, alpha_, 20,2, train_list, test_list)
+    tf_sgd_constant = TF_SGD(each_set,rank, alpha_, iterate,2, train_list, test_list)
     general_sgd_constant, time_sgd_constant, test_error, test_norm = tf_sgd_constant.train(1,0) #, [(0, seed) for seed in range(2)]) #0 mood SGD, 1 mood AdaGrad, 2 mood ADAM
     
-    print("Fiber Time:")
+    print("No Fiber Time:")
+
     print(time_sgd_constant)
 
     mse_test = tf_sgd_constant.mse_test()
