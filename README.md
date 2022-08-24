@@ -1,4 +1,4 @@
-# CellsDrugsGenes
+# FiT: Fiber based tensor completion algorithm for drug repurposing
 
 I will be keeping log of the set of experiments we have run for this project.
 
